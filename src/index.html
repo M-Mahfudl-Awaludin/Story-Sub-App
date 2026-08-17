@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/favicon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    <meta name="theme-color" content="#0f766e" />
+    <meta name="description" content="Bagikan momenmu lengkap dengan foto dan lokasi, jelajahi story dari pengguna lain di peta interaktif." />
+    <title>Dicoding Stories</title>
+
+    <script type="module" src="/scripts/index.js"></script>
+  </head>
+  <body>
+    <div id="offline-banner" class="offline-banner" role="status" hidden>
+      📴 Kamu sedang offline. Beberapa data mungkin tidak yang terbaru.
+    </div>
+    <header>
+      <div class="main-header container">
+        <a class="brand" href="#/">
+          <span class="brand-logo" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="42" height="42" focusable="false">
+              <defs>
+                <linearGradient id="brandPinGradient" x1="6" y1="4" x2="42" y2="46" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#5EEAD4" />
+                  <stop offset="1" stop-color="#0B5C56" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M24 4C14.61 4 7 11.61 7 21c0 12.4 15.02 21.68 16.13 22.34a1.9 1.9 0 0 0 1.74 0C26 42.68 41 33.4 41 21c0-9.39-7.61-17-17-17Z"
+                fill="url(#brandPinGradient)"
+              />
+              <circle cx="24" cy="20.5" r="10.5" fill="#F3F7F6" />
+              <circle cx="24" cy="20.5" r="10.5" fill="none" stroke="#0B5C56" stroke-width="1.1" opacity="0.35" />
+              <polygon points="24,12.5 27.4,20.5 24,20.5" fill="#0F766E" />
+              <polygon points="24,28.5 20.6,20.5 24,20.5" fill="#F0A500" />
+              <circle cx="24" cy="20.5" r="1.7" fill="#10241F" />
+            </svg>
+          </span>
+          <span class="brand-text">
+            <span class="brand-name">Dicoding Stories</span>
+            <span class="brand-tagline">Peta cerita dari mana saja</span>
+          </span>
+        </a>
+
+        <nav id="navigation-drawer" class="navigation-drawer" role="navigation" aria-label="Main navigation">
+          <div class="navigation-drawer-header">
+            <span class="navigation-drawer-title">Menu</span>
+          </div>
+          <ul id="nav-list" class="nav-list">
+            <li>
+              <a href="#/">
+                <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 11.5 12 4l9 7.5" />
+                  <path d="M5.5 10v9a1 1 0 0 0 1 1H9.5v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5H17.5a1 1 0 0 0 1-1v-9" />
+                </svg>
+                <span>Beranda</span>
+              </a>
+            </li>
+            <li id="add-story-nav-item" style="display: none;">
+              <a href="#/add-story">
+                <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 8v8M8 12h8" />
+                </svg>
+                <span>Tambah Story</span>
+              </a>
+            </li>
+            <li id="saved-stories-nav-item" style="display: none;">
+              <a href="#/saved">
+                <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1Z" />
+                </svg>
+                <span>Story Tersimpan</span>
+                <span id="pending-sync-badge" class="pending-sync-badge" hidden></span>
+              </a>
+            </li>
+            <li id="push-toggle-nav-item" hidden>
+              <button type="button" id="push-toggle-button" class="nav-action-btn">
+                <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+                <span id="push-toggle-label">Aktifkan Notifikasi</span>
+              </button>
+            </li>
+            <li id="install-nav-item" hidden>
+              <button type="button" id="install-button" class="nav-action-btn">
+                <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 3v13m0 0-4-4m4 4 4-4" />
+                  <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                </svg>
+                <span>Pasang Aplikasi</span>
+              </button>
+            </li>
+            <li id="auth-nav-item">
+              <a href="#/login" id="login-link">
+                <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4" />
+                  <path d="M10 8l4 4-4 4" />
+                  <path d="M14 12H3" />
+                </svg>
+                <span>Masuk</span>
+              </a>
+            </li>
+            <li id="user-nav-item" class="user-nav-item" style="display: none;">
+              <span class="user-chip">
+                <span class="user-avatar" id="user-avatar" aria-hidden="true"></span>
+                <span class="user-greeting">Halo, <span id="user-name"></span></span>
+              </span>
+              <button id="logout-button" class="logout-btn" type="button">
+                <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4" />
+                  <path d="M14 8l4 4-4 4" />
+                  <path d="M18 12H7" />
+                </svg>
+                <span>Keluar</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <button 
+          id="drawer-button" 
+          class="drawer-button"
+          aria-label="Toggle navigation menu"
+          aria-controls="navigation-drawer"
+          aria-expanded="false"
+        >
+          <span class="drawer-icon" aria-hidden="true">
+            <span class="drawer-icon-line"></span>
+            <span class="drawer-icon-line"></span>
+            <span class="drawer-icon-line"></span>
+          </span>
+        </button>
+      </div>
+      <div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
+    </header>
+
+    <main id="main-content" class="main-content" role="main"></main>
+  </body>
+</html>

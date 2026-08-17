@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anda Sedang Offline · Dicoding Stories</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        padding: 24px;
+      }
+      .card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 40px 32px;
+        max-width: 420px;
+        text-align: center;
+        box-shadow: 0 20px 25px -5px rgba(9, 40, 34, 0.25);
+      }
+      .icon {
+        font-size: 56px;
+        margin-bottom: 16px;
+      }
+      h1 {
+        color: #10241f;
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+      }
+      p {
+        color: #587068;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      button {
+        background: #0f766e;
+        color: #fff;
+        border: none;
+        padding: 12px 28px;
+        border-radius: 999px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:hover { background: #0b5c56; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="icon" aria-hidden="true">📡</div>
+      <h1>Kamu sedang offline</h1>
+      <p>
+        Halaman ini belum pernah dibuka sebelumnya sehingga belum tersimpan di perangkatmu.
+        Coba periksa koneksi internet, lalu muat ulang halaman. Story yang pernah kamu buka
+        sebelumnya tetap bisa diakses secara offline.
+      </p>
+      <button type="button" onclick="window.location.reload()">Muat Ulang</button>
+    </div>
+  </body>
+</html>
