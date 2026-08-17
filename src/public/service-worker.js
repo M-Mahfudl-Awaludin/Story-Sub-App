@@ -2,7 +2,7 @@
 // Handles: app-shell precaching, runtime caching (incl. offline access to
 // dynamic API data), push notifications, and notification click navigation.
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const STATIC_CACHE = `dicoding-stories-static-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `dicoding-stories-runtime-${CACHE_VERSION}`;
 const API_CACHE = `dicoding-stories-api-${CACHE_VERSION}`;
@@ -10,24 +10,29 @@ const ALL_CACHES = [STATIC_CACHE, RUNTIME_CACHE, API_CACHE];
 
 const API_ORIGIN = 'https://story-api.dicoding.dev';
 
+// Resolve the deploy base path from the service worker's own location, so
+// this works whether the app is hosted at a domain root or under a GitHub
+// Pages project subpath (e.g. /repo-name/) without hardcoding anything.
+const BASE_PATH = new URL('./', self.location).pathname;
+
 // Core app-shell assets. Hashed JS/CSS chunks produced by the Vite build are
 // picked up automatically by the runtime cache-first handler below the first
 // time they're requested, so we don't need to hardcode their (hashed) names.
 const PRECACHE_URLS = [
-  '/',
-  '/index.html',
-  '/offline.html',
-  '/manifest.webmanifest',
-  '/favicon.png',
-  '/images/logo.png',
-  '/icons/icon-72x72.png',
-  '/icons/icon-96x96.png',
-  '/icons/icon-128x128.png',
-  '/icons/icon-144x144.png',
-  '/icons/icon-152x152.png',
-  '/icons/icon-192x192.png',
-  '/icons/icon-384x384.png',
-  '/icons/icon-512x512.png',
+  BASE_PATH,
+  `${BASE_PATH}index.html`,
+  `${BASE_PATH}offline.html`,
+  `${BASE_PATH}manifest.webmanifest`,
+  `${BASE_PATH}favicon.png`,
+  `${BASE_PATH}images/logo.png`,
+  `${BASE_PATH}icons/icon-72x72.png`,
+  `${BASE_PATH}icons/icon-96x96.png`,
+  `${BASE_PATH}icons/icon-128x128.png`,
+  `${BASE_PATH}icons/icon-144x144.png`,
+  `${BASE_PATH}icons/icon-152x152.png`,
+  `${BASE_PATH}icons/icon-192x192.png`,
+  `${BASE_PATH}icons/icon-384x384.png`,
+  `${BASE_PATH}icons/icon-512x512.png`,
 ];
 
 self.addEventListener('install', (event) => {
@@ -111,7 +116,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       networkFirst(request, STATIC_CACHE).catch(async () => {
         const cache = await caches.open(STATIC_CACHE);
-        return (await cache.match('/index.html')) || (await cache.match('/offline.html'));
+        return (await cache.match(`${BASE_PATH}index.html`)) || (await cache.match(`${BASE_PATH}offline.html`));
       }),
     );
     return;
@@ -163,8 +168,8 @@ self.addEventListener('push', (event) => {
 
   const notificationOptions = {
     body,
-    icon: sourceOptions.icon || '/icons/icon-192x192.png',
-    badge: sourceOptions.badge || '/icons/icon-72x72.png',
+    icon: sourceOptions.icon || `${BASE_PATH}icons/icon-192x192.png`,
+    badge: sourceOptions.badge || `${BASE_PATH}icons/icon-72x72.png`,
     vibrate: [120, 60, 120],
     tag: 'dicoding-story-push',
     renotify: true,
@@ -187,7 +192,7 @@ self.addEventListener('notificationclick', (event) => {
 
   const data = event.notification.data || {};
   const hash = data.storyId ? `#/stories/${data.storyId}` : (data.url || '#/');
-  const targetPath = hash.startsWith('#') ? `/${hash}` : hash;
+  const targetPath = hash.startsWith('#') ? `${BASE_PATH}${hash}` : hash;
   const targetUrl = new URL(targetPath, self.location.origin).href;
 
   event.waitUntil(

@@ -12,7 +12,10 @@ export async function registerServiceWorker() {
   }
 
   try {
-    const registration = await navigator.serviceWorker.register('/service-worker.js');
+    // Relative path so registration resolves correctly whether the app is
+    // hosted at a domain root or under a GitHub Pages project subpath
+    // (e.g. https://username.github.io/repo-name/).
+    const registration = await navigator.serviceWorker.register('./service-worker.js');
     return registration;
   } catch (error) {
     console.error('Service worker registration failed:', error);
