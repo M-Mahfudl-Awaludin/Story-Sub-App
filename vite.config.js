@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: resolve(__dirname, 'src'),
-  base: '/proyek-kedua-dicoding/',
+  base: '/Story-Sub-App/',
   publicDir: resolve(__dirname, 'src', 'public'),
 
   build: {
